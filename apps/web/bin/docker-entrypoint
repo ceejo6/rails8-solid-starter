@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+./bin/rails db:prepare 2>/dev/null || true
+
+exec "${@}"

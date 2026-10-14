@@ -1,0 +1,28 @@
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: app_web
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - PORT=3000
+    volumes:
+      - ./data/storage:/rails/storage
+    networks:
+      app_network:
+        aliases:
+          - web
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
